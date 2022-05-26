@@ -1,0 +1,18 @@
+modLoader="javafml"
+loaderVersion="[40,)"
+license="GNU GENERAL PUBLIC LICENSE"
+
+[[mods]]
+modId="lovelock"
+version="0.0.1"
+displayName="Lovelock"
+
+logoFile="examplemod.png"
+credits=""
+authors="Niels Bader; Matija Brown; Milan Rauschert"
+
+description='''
+This is a long form description of the mod. You can write whatever you want here
+
+Have some lorem ipsum.
+'''
