@@ -1,0 +1,11 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"north": "lovelock:block/electrolyser_front",
+		"east": "lovelock:block/electrolyser_side",
+		"south": "lovelock:block/electrolyser_back",
+		"west": "lovelock:block/electrolyser_side",
+		"up": "lovelock:block/electrolyser_top",
+		"down": "lovelock:block/electrolyser_bottom"		
+	}
+}

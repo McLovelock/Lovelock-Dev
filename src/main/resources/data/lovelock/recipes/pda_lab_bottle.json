@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#BL",
+        "YBY",
+        "YYY"
+    ],
+    	"key": {
+        "#": {
+            "item": "minecraft:sugar"
+    },     
+        "B": {
+            "item": "minecraft:baked_potato"
+    },
+        "L": {
+            "item": "lovelock:agar_agar"       
+    },
+        "Y": {
+            "item": "lovelock:lab_bottle"
+           	 }
+    },
+    "result": {
+        "item": "lovelock:pda_lab_bottle",
+        "count": 5
+    }
+}

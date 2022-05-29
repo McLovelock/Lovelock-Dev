@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "lovelock:item/carrot_juice_pda_petri_dish"
+	}
+}

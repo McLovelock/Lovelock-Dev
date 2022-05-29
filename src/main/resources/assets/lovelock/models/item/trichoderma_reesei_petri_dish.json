@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "lovelock:item/trichoderma_reesei_petri_dish"
+	}
+}

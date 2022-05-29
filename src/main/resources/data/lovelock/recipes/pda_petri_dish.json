@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "#L#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "lovelock:petri_dish"
+        },
+        "L": {
+            "item": "lovelock:pda_lab_bottle"
+        }
+    },
+    "result": {
+        "item": "lovelock:pda_petri_dish",
+        "count": 8
+    }
+}

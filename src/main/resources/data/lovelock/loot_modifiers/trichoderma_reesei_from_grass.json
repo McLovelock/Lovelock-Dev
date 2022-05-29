@@ -1,0 +1,10 @@
+{
+	"conditions":[
+		{
+		"condition": "block_state_property",
+		"block": "minecraft:grass"
+		}
+	],
+	"addition": "lovelock:trichoderma_reesei",
+	"type": "lovelock:trichoderma_reesei_from_grass"
+}

@@ -1,0 +1,22 @@
+{
+	//CreativeTabs
+	
+	"itemGroup.lovelock" : "Lovelock",
+	
+	// Items
+
+	"item.lovelock.sulphur_crystal": "Sulphur Crystal",
+	"item.lovelock.agar_agar": "Agar Agar",
+	"item.lovelock.pda_lab_bottle": "PDA Lab Bottle",
+	"item.lovelock.lab_bottle": "Lab Bottle",
+	"item.lovelock.carrot_juice_bottle": "Carrot Juice",
+	"item.lovelock.petri_dish": "Petri Dish",
+	"item.lovelock.pda_petri_dish": "PDA Petri Dish",
+	"item.lovelock.carrot_juice_pda_petri_dish": "Carrot Juice PDA Petri Dish",
+	"item.lovelock.trichoderma_reesei": "Trichoderma Reesei",
+	"item.lovelock.trichoderma_reesei_petri_dish": "Trichoderma Reesei Petri Dish",
+	
+	//Blocks
+	
+	"block.lovelock.electrolyser": "Electrolyser"
+}
