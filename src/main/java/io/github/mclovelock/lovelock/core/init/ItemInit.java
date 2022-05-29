@@ -25,26 +25,28 @@ public class ItemInit {
 		return ITEMS.register(name, supplier);
 	}
 
-	public static final RegistryObject<Item> SULPHUR_CRYSTAL = RegisterItem("sulphur_crystal",
+	public static final RegistryObject<Item> SULPHUR_CRYSTAL = 					RegisterItem("sulphur_crystal",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> LAB_BOTTLE = RegisterItem("lab_bottle",
+	public static final RegistryObject<Item> LAB_BOTTLE = 						RegisterItem("lab_bottle",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> PDA_LAB_BOTTLE = RegisterItem("pda_lab_bottle",
+	public static final RegistryObject<Item> PDA_LAB_BOTTLE = 					RegisterItem("pda_lab_bottle",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> AGER_AGER = RegisterItem("agar_agar",
+	public static final RegistryObject<Item> AGER_AGER = 						RegisterItem("agar_agar",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> CARROT_JUICE_BOTTLE = RegisterItem("carrot_juice_bottle",
+	public static final RegistryObject<Item> CARROT_JUICE_BOTTLE = 				RegisterItem("carrot_juice_bottle",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> PETRI_DISH = RegisterItem("petri_dish",
+	public static final RegistryObject<Item> PETRI_DISH = 						RegisterItem("petri_dish",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> PDA_PETRI_DISH = RegisterItem("pda_petri_dish",
+	public static final RegistryObject<Item> PDA_PETRI_DISH = 					RegisterItem("pda_petri_dish",
 			root().tab(CreativeTabs.LOVELOCK));
-	public static final RegistryObject<Item> CARROT_JUICE_PDA_PETRI_DISH = RegisterItem("carrot_juice_pda_petri_dish",
+	public static final RegistryObject<Item> CARROT_JUICE_PDA_PETRI_DISH = 		RegisterItem("carrot_juice_pda_petri_dish",
 			root().tab(CreativeTabs.LOVELOCK));		
-	public static final RegistryObject<Item> TRICHODERMA_REESEI = RegisterItem("trichoderma_reesei",
+	public static final RegistryObject<Item> TRICHODERMA_REESEI = 				RegisterItem("trichoderma_reesei",
 			root().tab(CreativeTabs.LOVELOCK));		
-	public static final RegistryObject<Item> TRICHODERMA_REESEI_PETRI_DISH = RegisterItem("trichoderma_reesei_petri_dish",
+	public static final RegistryObject<Item> TRICHODERMA_REESEI_PETRI_DISH = 	RegisterItem("trichoderma_reesei_petri_dish",
 			root().tab(CreativeTabs.LOVELOCK));	
 	
+	// don't ever initialise this class!
+	private ItemInit() { }
 
 }

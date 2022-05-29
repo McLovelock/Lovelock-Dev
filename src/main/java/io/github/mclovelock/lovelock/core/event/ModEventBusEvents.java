@@ -16,8 +16,7 @@ public class ModEventBusEvents {
 	@SubscribeEvent
 	public static void registerModifierSerializers(
 			@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-		event.getRegistry().registerAll(
-				new TrichodermaReeseiFromGrassAdditionModifier.Serializer()
+		event.getRegistry().registerAll(new TrichodermaReeseiFromGrassAdditionModifier.Serializer()
 				.setRegistryName(new ResourceLocation(Lovelock.MODID, "trichoderma_reesei_from_grass")));
 	}
 }
