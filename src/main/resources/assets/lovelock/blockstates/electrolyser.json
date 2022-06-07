@@ -1,8 +1,0 @@
-{
-	"variants":	{
-		"facing=north": { "model": "lovelock:block/electrolyser"},
-		"facing=east": { "model": "lovelock:block/electrolyser", "y": 90},
-		"facing=south": { "model": "lovelock:block/electrolyser", "y": 180},
-		"facing=west": { "model": "lovelock:block/electrolyser", "y": 270}
-	}
-}

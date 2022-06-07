@@ -5,6 +5,7 @@ import com.google.common.base.Supplier;
 import io.github.mclovelock.lovelock.Lovelock;
 import io.github.mclovelock.lovelock.client.CreativeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -47,4 +48,12 @@ public class ItemInit {
 			root().tab(CreativeTabs.LOVELOCK));	
 	
 
+	
+	
+	//Registry
+	
+	public static void register(IEventBus eventBus) {
+		ITEMS.register(eventBus);
+	}
+	
 }
