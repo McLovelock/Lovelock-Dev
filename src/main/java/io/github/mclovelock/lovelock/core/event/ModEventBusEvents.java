@@ -4,7 +4,10 @@ import javax.annotation.Nonnull;
 
 import io.github.mclovelock.lovelock.Lovelock;
 import io.github.mclovelock.lovelock.core.event.loot.TrichodermaReeseiFromGrassAdditionModifier;
+import io.github.mclovelock.lovelock.recipe.WarmingCabinetRecipe;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,5 +21,9 @@ public class ModEventBusEvents {
 			@Nonnull final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
 		event.getRegistry().registerAll(new TrichodermaReeseiFromGrassAdditionModifier.Serializer()
 				.setRegistryName(new ResourceLocation(Lovelock.MODID, "trichoderma_reesei_from_grass")));
+	}
+	@SubscribeEvent
+	public static void registerRecipeTypes(final RegistryEvent.Register<RecipeSerializer<?>> event) {
+		Registry.register(Registry.RECIPE_TYPE, WarmingCabinetRecipe.Type.ID, WarmingCabinetRecipe.Type.INSTANCE);
 	}
 }

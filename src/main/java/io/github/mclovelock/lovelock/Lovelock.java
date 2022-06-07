@@ -7,6 +7,7 @@ import io.github.mclovelock.lovelock.core.init.BlockEntityInit;
 import io.github.mclovelock.lovelock.core.init.BlockInit;
 import io.github.mclovelock.lovelock.core.init.ItemInit;
 import io.github.mclovelock.lovelock.core.init.MenuInit;
+import io.github.mclovelock.lovelock.core.init.RecipeInit;
 import io.github.mclovelock.lovelock.screen.WarmingCabinetScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,7 +31,7 @@ public class Lovelock {
 		BlockInit.register(bus);
 		BlockEntityInit.register(bus);
 		MenuInit.register(bus);
-		
+		RecipeInit.register(bus);
 		
 		
 		MinecraftForge.EVENT_BUS.register(this);

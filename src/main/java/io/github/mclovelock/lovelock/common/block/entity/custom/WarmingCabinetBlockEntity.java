@@ -1,5 +1,6 @@
 package io.github.mclovelock.lovelock.common.block.entity.custom;
 
+import java.util.Optional;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
@@ -8,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import io.github.mclovelock.lovelock.core.init.BlockEntityInit;
 import io.github.mclovelock.lovelock.core.init.ItemInit;
+import io.github.mclovelock.lovelock.recipe.WarmingCabinetRecipe;
 import io.github.mclovelock.lovelock.screen.WarmingCabinetMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,6 +21,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
@@ -43,14 +46,31 @@ public class WarmingCabinetBlockEntity extends BlockEntity implements MenuProvid
 
 	private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
+	private final ContainerData data;
+	private int[] progress = new int[rtx];
+	public static final int CRAFTING_PROGRESS = 72;
+	public static int rtx = 5;
+
 	public WarmingCabinetBlockEntity(BlockPos pPos, BlockState pBlockState) {
 		super(BlockEntityInit.WARMING_CABINET_BLOCK_ENTITY.get(), pPos, pBlockState);
+		this.data = new ContainerData() {
+			public int get(int index) {
+				return progress[index];
+			}
 
+			public void set(int index, int value) {
+				progress[index] = value;
+			}
+
+			public int getCount() {
+				return rtx;
+			}
+		};
 	}
 
 	@Override
 	public AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory, Player pPlayer) {
-		return new WarmingCabinetMenu(pContainerId, pInventory, this);
+		return new WarmingCabinetMenu(pContainerId, pInventory, this, this.data);
 	}
 
 	@Override
@@ -83,7 +103,11 @@ public class WarmingCabinetBlockEntity extends BlockEntity implements MenuProvid
 
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {
+
 		tag.put("inventory", itemHandler.serializeNBT());
+		for (int i = 0; i < 4; i++) {
+			tag.putInt("warming_cabinet.progress_" + i, progress[i]);
+		}
 		super.saveAdditional(tag);
 	}
 
@@ -91,6 +115,7 @@ public class WarmingCabinetBlockEntity extends BlockEntity implements MenuProvid
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		itemHandler.deserializeNBT(nbt.getCompound("inventory"));
+		// progress = nbt.getInt("warming_cabinet.progress");
 	}
 
 	public void drops() {
@@ -101,31 +126,76 @@ public class WarmingCabinetBlockEntity extends BlockEntity implements MenuProvid
 	}
 
 	public static void tick(Level pLevel, BlockPos pPos, BlockState pState, WarmingCabinetBlockEntity pBlockEntity) {
-		if (hasRecipe(pBlockEntity) && hasNotReachedStackLimit(pBlockEntity)) {
-			craftItem(pBlockEntity);
+		for (int i = 0; i < 4; i++) {
+			if (hasRecipe(pBlockEntity, i)) {
+				pBlockEntity.progress[i]++;
+				setChanged(pLevel, pPos, pState);
+				if (pBlockEntity.progress[i] > CRAFTING_PROGRESS) {
+					craftItem(pBlockEntity, i);
+
+				}
+			} else {
+				pBlockEntity.resetProgress(i);
+				setChanged(pLevel, pPos, pState);
+			}
 		}
 	}
 
-	private static void craftItem(WarmingCabinetBlockEntity pBlockEntity) {
-		pBlockEntity.itemHandler.extractItem(0, 1, false);
-		pBlockEntity.itemHandler.extractItem(1, 1, false);
+	private static boolean hasRecipe(WarmingCabinetBlockEntity entity, int index) {
+		Level level = entity.level;
+		SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+		for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+			inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
+		}
 
-		pBlockEntity.itemHandler.setStackInSlot(5, new ItemStack(ItemInit.TRICHODERMA_REESEI_PETRI_DISH.get(),
-				pBlockEntity.itemHandler.getStackInSlot(5).getCount() + 1));
+		Optional<WarmingCabinetRecipe> match = level.getRecipeManager().getRecipeFor(WarmingCabinetRecipe.Type.INSTANCE,
+				inventory, level);
+
+		if (!match.isPresent()) {
+			return false;
+		}
+		
+		match.get().setIndex(index);
+		if (index == 3) {
+			System.out.println(match.get().getResultItem());
+		}
+		return match.isPresent() && canInsertAmountIntoOutputSlot(inventory, index)
+				&& canInsertItemIntoOutputSlot(inventory, match.get().getResultItem(), index);
+
 	}
 
-	private static boolean hasRecipe(WarmingCabinetBlockEntity pBlockEntity) {
-		boolean hasItemInFirstSlot = pBlockEntity.itemHandler.getStackInSlot(0).getItem() == ItemInit.PDA_LAB_BOTTLE
-				.get();
-		boolean hasItemInSecondSlot = pBlockEntity.itemHandler.getStackInSlot(1)
-				.getItem() == ItemInit.CARROT_JUICE_PDA_PETRI_DISH.get();
+	private static void craftItem(WarmingCabinetBlockEntity entity, int index) {
 
-		return hasItemInFirstSlot && hasItemInSecondSlot;
+		Level level = entity.level;
+		SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots());
+		for (int i = 0; i < entity.itemHandler.getSlots(); i++) {
+			inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
+		}
+
+		Optional<WarmingCabinetRecipe> match = level.getRecipeManager().getRecipeFor(WarmingCabinetRecipe.Type.INSTANCE,
+				inventory, level);
+
+		if (match.isPresent()) {
+			match.get().setIndex(index);
+			entity.itemHandler.extractItem(index, 1, false);
+
+			entity.itemHandler.setStackInSlot(index + 5, new ItemStack(match.get().getResultItem().getItem(),
+					entity.itemHandler.getStackInSlot(5).getCount() + 1));
+
+			entity.resetProgress(index);
+
+		}
 	}
 
-	private static boolean hasNotReachedStackLimit(WarmingCabinetBlockEntity pBlockEntity) {
-		return pBlockEntity.itemHandler.getStackInSlot(5).getCount() < pBlockEntity.itemHandler.getStackInSlot(5)
-				.getMaxStackSize();
+	private void resetProgress(int index) {
+		this.progress[index] = 0;
 	}
 
+	private static boolean canInsertItemIntoOutputSlot(SimpleContainer inventory, ItemStack output, int index) {
+		return inventory.getItem(index + 5).getItem() == output.getItem() || inventory.getItem(index + 5).isEmpty();
+	}
+
+	private static boolean canInsertAmountIntoOutputSlot(SimpleContainer inventory, int index) {
+		return inventory.getItem(index + 5).getMaxStackSize() > inventory.getItem(index + 5).getCount();
+	}
 }
