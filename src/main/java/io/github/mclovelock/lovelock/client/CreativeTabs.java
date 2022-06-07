@@ -10,7 +10,8 @@ public final class CreativeTabs {
 	public static final CreativeModeTab LOVELOCK = new CreativeModeTab(Lovelock.MODID) {
 		@Override
 		public ItemStack makeIcon() {
-			return BlockInit.WARMING_CABINET1.get().getDefaultInstance();
+			return BlockInit.WARMING_CABINET_ITEM.get().getDefaultInstance();
+
 		}
 	};
 }

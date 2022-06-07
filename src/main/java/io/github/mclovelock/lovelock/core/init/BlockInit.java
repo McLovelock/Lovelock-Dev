@@ -47,7 +47,7 @@ public class BlockInit {
 			() -> new WarmingCabinetBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY)
 					.requiresCorrectToolForDrops()));
 
-	public static final RegistryObject<Item> WARMING_CABINET1 = registerBlockItem("warming_cabinet", WARMING_CABINET);
+	public static final RegistryObject<Item> WARMING_CABINET_ITEM = registerBlockItem("warming_cabinet", WARMING_CABINET);
 
 	// Registry
 

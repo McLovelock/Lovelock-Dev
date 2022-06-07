@@ -15,38 +15,39 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TrichodermaReeseiFromGrassAdditionModifier extends LootModifier {
-    private final Item addition;
+	private final Item addition;
 
-    protected TrichodermaReeseiFromGrassAdditionModifier(LootItemCondition[] conditionsIn, Item addition) {
-        super(conditionsIn);
-        this.addition = addition;
-    }
+	protected TrichodermaReeseiFromGrassAdditionModifier(LootItemCondition[] conditionsIn, Item addition) {
+		super(conditionsIn);
+		this.addition = addition;
+	}
 
-    @Nonnull
-    @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	@Nonnull
+	@Override
+	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
 
-        if(context.getRandom().nextFloat() > 0.99f) {
-            generatedLoot.add(new ItemStack(addition, 1));
-        }
-        return generatedLoot;
-    }
+		if (context.getRandom().nextFloat() > 0.99f) {
+			generatedLoot.add(new ItemStack(addition, 1));
+		}
+		return generatedLoot;
+	}
 
-    public static class Serializer extends GlobalLootModifierSerializer<TrichodermaReeseiFromGrassAdditionModifier> {
+	public static class Serializer extends GlobalLootModifierSerializer<TrichodermaReeseiFromGrassAdditionModifier> {
 
-        @Override
-        public TrichodermaReeseiFromGrassAdditionModifier read(ResourceLocation name, JsonObject object,
-                                                           LootItemCondition[] conditionsIn) {
-            Item addition = ForgeRegistries.ITEMS.getValue(
-                    new ResourceLocation(GsonHelper.getAsString(object, "addition")));
-            return new TrichodermaReeseiFromGrassAdditionModifier(conditionsIn, addition);
-        }
+		@Override
+		public TrichodermaReeseiFromGrassAdditionModifier read(ResourceLocation name, JsonObject object,
+				LootItemCondition[] conditionsIn) {
+			Item addition = ForgeRegistries.ITEMS
+					.getValue(new ResourceLocation(GsonHelper.getAsString(object, "addition")));
+			return new TrichodermaReeseiFromGrassAdditionModifier(conditionsIn, addition);
+		}
 
-        @Override
-        public JsonObject write(TrichodermaReeseiFromGrassAdditionModifier instance) {
-            JsonObject json = makeConditions(instance.conditions);
-            json.addProperty("addition", ForgeRegistries.ITEMS.getKey(instance.addition).toString());
-            return json;
-        }
-    }
+		@Override
+		public JsonObject write(TrichodermaReeseiFromGrassAdditionModifier instance) {
+			JsonObject json = makeConditions(instance.conditions);
+			json.addProperty("addition", ForgeRegistries.ITEMS.getKey(instance.addition).toString());
+			return json;
+		}
+	}
+	
 }
