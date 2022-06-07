@@ -11,7 +11,6 @@ public final class CreativeTabs {
 		@Override
 		public ItemStack makeIcon() {
 			return BlockInit.WARMING_CABINET_ITEM.get().getDefaultInstance();
-
 		}
 	};
 }
