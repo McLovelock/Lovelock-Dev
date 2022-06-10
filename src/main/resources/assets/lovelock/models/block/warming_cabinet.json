@@ -1,0 +1,11 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"north": "lovelock:block/warming_cabinet_front",
+		"east": "lovelock:block/warming_cabinet_side",
+		"south": "lovelock:block/warming_cabinet_back",
+		"west": "lovelock:block/warming_cabinet_side",
+		"up": "lovelock:block/warming_cabinet_top",
+		"down": "lovelock:block/warming_cabinet_bottom"		
+	}
+}

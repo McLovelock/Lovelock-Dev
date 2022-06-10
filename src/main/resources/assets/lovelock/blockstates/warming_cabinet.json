@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=north": {
+			"model": "lovelock:block/warming_cabinet"
+		},
+		"facing=east": {
+			"model": "lovelock:block/warming_cabinet",
+			"y": 90
+		},
+		"facing=south": {
+			"model": "lovelock:block/warming_cabinet",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "lovelock:block/warming_cabinet",
+			"y": 270
+		}
+	}
+}

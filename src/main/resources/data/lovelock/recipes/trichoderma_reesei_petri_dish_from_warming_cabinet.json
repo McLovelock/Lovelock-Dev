@@ -1,0 +1,11 @@
+{
+  "type": "lovelock:warming",
+  "ingredients": [
+    {
+      "item": "lovelock:carrot_juice_pda_petri_dish"
+    }
+  ],
+  "output": {
+    "item": "lovelock:trichoderma_reesei_petri_dish"
+  }
+}
