@@ -67,9 +67,8 @@ public final class ItemInit {
 
 	public static final RegistryObject<Item> WARMING_CABINET_ITEM = registerBlockItem("warming_cabinet",
 			BlockInit.WARMING_CABINET, root().tab(CreativeTabs.LOVELOCK));
-
+	
 	// don't ever initialise this class!
-	private ItemInit() {
-	}
-
+	private ItemInit() { }
+	
 }

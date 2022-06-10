@@ -35,9 +35,8 @@ public class Lovelock {
 	private void setup(final FMLCommonSetupEvent event) {
 			
 	}
+
+	private void clientSetup(final FMLCommonSetupEvent event) {	}
 	
-	private void clientSetup(final FMLCommonSetupEvent event) {	
-		
-	}
 
 }

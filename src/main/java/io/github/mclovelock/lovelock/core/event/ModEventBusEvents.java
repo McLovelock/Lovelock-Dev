@@ -24,5 +24,5 @@ public class ModEventBusEvents {
 	public static void registerRecipeTypes(final RegistryEvent.Register<RecipeSerializer<?>> event) {
 
 	}
-
+	
 }

@@ -18,9 +18,13 @@
 	
 	//Blocks
 	
+<<<<<<< HEAD
 	"block.lovelock.warming_cabinet": "Warming Cabinet",
 	
 	// Container UIs
 	
 	"container.lovelock.warming_cabinet": "Warming Cabinet"
+=======
+	"block.lovelock.warming_cabinet": "Warming Cabinet"
+>>>>>>> b0f548a3c653067825d83c10c754a71d98ed7d2a
 }

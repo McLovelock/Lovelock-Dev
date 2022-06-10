@@ -25,7 +25,7 @@ public final class ContainerInit {
 	public static void register(IEventBus eventBus) {
 		CONTAINERS.register(eventBus);
 	}
-	
+
 	private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuContainer(String name,
 			Supplier<MenuType<T>> menuTypeSupplier) {
 		return CONTAINERS.register(name, menuTypeSupplier);
