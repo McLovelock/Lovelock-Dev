@@ -114,8 +114,8 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity {
 
 	@Override
 	protected void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
 		tag.put("inventory", inventory.serializeNBT());
+		super.saveAdditional(tag);
 	}
 
 	@Override

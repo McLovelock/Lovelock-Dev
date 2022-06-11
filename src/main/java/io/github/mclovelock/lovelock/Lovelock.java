@@ -7,6 +7,7 @@ import io.github.mclovelock.lovelock.core.init.BlockEntityInit;
 import io.github.mclovelock.lovelock.core.init.BlockInit;
 import io.github.mclovelock.lovelock.core.init.ContainerInit;
 import io.github.mclovelock.lovelock.core.init.ItemInit;
+import io.github.mclovelock.lovelock.core.init.RecipeInit;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -21,13 +22,15 @@ public class Lovelock {
 
 	public Lovelock() {
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-		bus.addListener(this::setup);
-		bus.addListener(this::clientSetup);
 		
 		BlockInit.register(bus);
 		BlockEntityInit.register(bus);
 		ContainerInit.register(bus);
 		ItemInit.register(bus);
+		RecipeInit.register(bus);
+
+		bus.addListener(this::setup);
+		bus.addListener(this::clientSetup);
 		
 		MinecraftForge.EVENT_BUS.register(this);
 	}

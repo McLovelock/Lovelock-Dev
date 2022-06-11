@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import io.github.mclovelock.lovelock.Lovelock;
+import io.github.mclovelock.lovelock.common.block.entity.WarmingCabinetBlockEntity;
 import io.github.mclovelock.lovelock.common.container.WarmingCabinetContainer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -20,10 +21,23 @@ public class WarmingCabinetScreen extends AbstractContainerScreen<WarmingCabinet
 		super(container, playerInventory, title);
 		this.leftPos = 0;
 		this.topPos = 0;
-		this.imageWidth = 176;
+		
+		this.imageWidth = 187;
 		this.imageHeight = 166;
 	}
 
+	private void drawArrow(PoseStack stack) {
+		final int startX = 27, y = 38;
+		final int arrowWidthPlusDistance = 28;
+		final int arrowX = 177, arrowY = 0;
+		
+		for (int i = 0; i < WarmingCabinetBlockEntity.SLOT_COUNT; i++) {
+			if (menu.isCrafting(i)) {
+				blit(stack, startX, y, 177, 17, 10, menu.getScaledProgress(i));
+			}
+		}
+	}
+	
 	@Override
 	protected void renderBg(PoseStack stack, float mouseX, int mouseY, int partialTicks) {
 		renderBackground(stack);
@@ -31,7 +45,10 @@ public class WarmingCabinetScreen extends AbstractContainerScreen<WarmingCabinet
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.setShaderTexture(0, TEXTURE);
+		
 		blit(stack, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+
+		drawArrow(stack);
 	}
 
 	@Override
