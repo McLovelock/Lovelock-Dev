@@ -31,9 +31,12 @@ public class WarmingCabinetScreen extends AbstractContainerScreen<WarmingCabinet
 		final int arrowWidthPlusDistance = 28;
 		final int arrowX = 177, arrowY = 0;
 		
+		int sx = (width - imageWidth) / 2;
+		int sy = (height - imageHeight) / 2;
+		
 		for (int i = 0; i < WarmingCabinetBlockEntity.SLOT_COUNT; i++) {
 			if (menu.isCrafting(i)) {
-				blit(stack, startX, y, 177, 17, 10, menu.getScaledProgress(i));
+				blit(stack, sx + startX + i * arrowWidthPlusDistance, sy + y, arrowX, arrowY, 10, menu.getScaledProgress(i));
 			}
 		}
 	}
@@ -46,7 +49,10 @@ public class WarmingCabinetScreen extends AbstractContainerScreen<WarmingCabinet
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		
-		blit(stack, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		final int menuWidth = 176;
+		final int menuHeight = 166;
+		
+		blit(stack, leftPos, topPos, 0, 0, menuWidth, menuHeight);
 
 		drawArrow(stack);
 	}

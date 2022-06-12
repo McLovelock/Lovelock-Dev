@@ -5,7 +5,6 @@ import java.util.Optional;
 import io.github.mclovelock.lovelock.Lovelock;
 import io.github.mclovelock.lovelock.common.recipe.WarmingCabinetRecipe;
 import io.github.mclovelock.lovelock.core.init.BlockEntityInit;
-import io.github.mclovelock.lovelock.core.init.ItemInit;
 import io.github.mclovelock.lovelock.core.util.tick.ImplementedBlockEntityTicker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +15,6 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.IModelData;
 
 public class WarmingCabinetBlockEntity extends AbstractInventoryBlockEntity implements ImplementedBlockEntityTicker {
 
@@ -70,15 +68,11 @@ public class WarmingCabinetBlockEntity extends AbstractInventoryBlockEntity impl
 		super(BlockEntityInit.WARMING_CABINET.get(), pos, state, N_ITEM_SLOTS);
 
 		data = new Data();
-
-		// testing code
-		for (int i = 0; i < SLOT_COUNT; i++) {
-			maxProgresses[i] = 40;
-		}
 	}
 
 	private void resetSlot(int slot) {
 		progresses[slot] = 0;
+		maxProgresses[slot] = -1;
 	}
 
 	private void craftItem(int slot) {
@@ -107,7 +101,7 @@ public class WarmingCabinetBlockEntity extends AbstractInventoryBlockEntity impl
 		return (inventory.getItem(index).getItem() == resultItem.getItem()) || inventory.getItem(index).isEmpty();
 	}
 
-	private boolean hasRecipe(int index) {
+	private int hasRecipe(int index) {
 		int startIndex = index;
 		int completeIndex = index + SLOT_COUNT;
 
@@ -119,29 +113,28 @@ public class WarmingCabinetBlockEntity extends AbstractInventoryBlockEntity impl
 				.getRecipeFor(WarmingCabinetRecipe.Type.INSTANCE, inventory, level);
 
 		if (recipe.isPresent()) {
-			return canInsertAmountIntoOutputSlot(inventory, completeIndex)
-					&& canInsertResultItemIntoOutputSlot(inventory, recipe.get().getResultItem(), completeIndex);
+			if (canInsertAmountIntoOutputSlot(inventory, completeIndex)
+					&& canInsertResultItemIntoOutputSlot(inventory, recipe.get().getResultItem(), completeIndex)) {
+				return recipe.get().getMaxProgress();
+			}
 		}
 
-		return false;
+		return -1;
 	}
 
 	public void tick() {
 		for (int slot = 0; slot < SLOT_COUNT; slot++) {
-			if ((super.inventory.getStackInSlot(0).getItem() == ItemInit.CARROT_JUICE_PDA_PETRI_DISH.get())
-					&& (super.inventory.getStackInSlot(0).getCount() > 0)) {
-			}
-			if (hasRecipe(slot)) {
+			if ((maxProgresses[slot] = hasRecipe(slot)) != -1) {
 				progresses[slot]++;
-				setChanged();
 				if (progresses[slot] > maxProgresses[slot]) {
 					craftItem(slot);
+					resetSlot(slot);
 				}
 			} else {
 				resetSlot(slot);
-				setChanged();
 			}
 		}
+		setChanged();
 	}
 
 	@Override

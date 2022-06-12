@@ -44,6 +44,7 @@ public class WarmingCabinetRecipe implements Recipe<SimpleContainer> {
 		@Override
 		public WarmingCabinetRecipe fromJson(ResourceLocation id, JsonObject json) {
 			ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
+			int maxProgress = json.get("max_progress").getAsInt();
 			
 			JsonArray ing = GsonHelper.getAsJsonArray(json, "ingredients");
 			NonNullList<Ingredient> ingredients = NonNullList.withSize(ing.size(), Ingredient.EMPTY);
@@ -52,24 +53,26 @@ public class WarmingCabinetRecipe implements Recipe<SimpleContainer> {
 				ingredients.set(i, Ingredient.fromJson(ing.get(i)));
 			}
 			
-			return new WarmingCabinetRecipe(id, result, ingredients);
+			return new WarmingCabinetRecipe(id, result, ingredients, maxProgress);
 		}
 		
 		@Override
 		public WarmingCabinetRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
 			NonNullList<Ingredient> ingredients = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
+			int maxProgress = buffer.readInt();
 			
 			for (int i = 0; i < ingredients.size(); i++) {
 				ingredients.set(i, Ingredient.fromNetwork(buffer));
 			}
 			
 			ItemStack result = buffer.readItem();
-			return new WarmingCabinetRecipe(id, result, ingredients);
+			return new WarmingCabinetRecipe(id, result, ingredients, maxProgress);
 		}
 		
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, WarmingCabinetRecipe recipe) {
 			buffer.writeInt(recipe.getIngredients().size());
+			buffer.writeInt(recipe.getMaxProgress());
 			
 			for (Ingredient ingredient : recipe.getIngredients()) {
 				ingredient.toNetwork(buffer);
@@ -97,11 +100,13 @@ public class WarmingCabinetRecipe implements Recipe<SimpleContainer> {
 	private final ResourceLocation id;
 	private final ItemStack result;
 	private final NonNullList<Ingredient> ingredients;
-
-	public WarmingCabinetRecipe(ResourceLocation id, ItemStack result, NonNullList<Ingredient> ingredients) {
+	private final int maxProgress;
+	
+	public WarmingCabinetRecipe(ResourceLocation id, ItemStack result, NonNullList<Ingredient> ingredients, int maxProgress) {
 		this.id = id;
 		this.result = result;
 		this.ingredients = ingredients;
+		this.maxProgress = maxProgress;
 	}
 
 	/*
@@ -150,6 +155,10 @@ public class WarmingCabinetRecipe implements Recipe<SimpleContainer> {
 	@Override
 	public RecipeType<?> getType() {
 		return Type.INSTANCE;
+	}
+	
+	public int getMaxProgress() {
+		return maxProgress;
 	}
 
 }

@@ -1,5 +1,6 @@
 {
   "type": "lovelock:warming",
+  "max_progress": 150,
   "ingredients": [
     {
       "item": "lovelock:carrot_juice_pda_petri_dish"
